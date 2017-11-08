@@ -62,12 +62,44 @@ public class Partida {
 		nave.detenerDisparo();
 	}
 	
+	public boolean continuar(){
+		boolean continuar = false;
+		NaveEnemiga  actual = primera;
+		while(actual!=null && !continuar){
+			continuar = !actual.isEliminada();
+			actual = actual.getSiguiente();
+		}
+		return continuar;
+	}
+	
 	public void moverDisparo (){
 		nave.getDisparo().mover(0, Disparo.MOVIMIENTO_DISPARO, altoPanel, anchoPanel);
-		if (nave.getDisparo().getPosY() == 0 || nave.getDisparo().getPosY() + Disparo.ALTO_MISILES == altoPanel){
+		
+		NaveEnemiga actual = primera;
+		
+		while(actual!=null && nave.isDisparando()){
+			
+			if(!actual.isEliminada()){
+				
+				int x1 = nave.getDisparo().getPosX();
+				int y1 = nave.getDisparo().getPosY();		
+				
+				if(actual.recibioDisparo(x1, x1+Disparo.ANCHO_MISILES, y1, y1+Disparo.ALTO_MISILES)){
+					actual.setEliminada(true);
+					nave.detenerDisparo();
+				}
+			}
+			actual = actual.getSiguiente();
+		}
+		
+		if (nave.isDisparando() && (nave.getDisparo().getPosY() == 0 || nave.getDisparo().getPosY() + Disparo.ALTO_MISILES == altoPanel)){
 			nave.detenerDisparo();
 		}
 	}
+	
+	
+	
+	
 	
 	public void empezarMovimientoNave(){
 		nave.setEnMovimiento(true);

@@ -16,13 +16,12 @@ public class HiloMoverNavesEnemigas implements Runnable{
 	
 	@Override
 	public void run() {
-		while (true){
+		while (partida.continuar()){
 			partida.moverNaves();
 			ventana.refrescarPanel();
 			try {
 				Thread.sleep(partida.getEsperaHiloNavesEnemigas());
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

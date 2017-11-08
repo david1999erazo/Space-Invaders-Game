@@ -35,8 +35,11 @@ public class PanelJugar extends JPanel {
 		Graphics2D g2 = (Graphics2D) g;
 		NaveEnemiga actual = principal.getPartida().getPrimera();
 		while (actual != null){
-			ImageIcon icon = new ImageIcon(actual.getRutaImagen());
-			g2.drawImage(icon.getImage(), actual.getPosX(), actual.getPosY(), null);
+			if(!actual.isEliminada()) {				
+				ImageIcon icon = new ImageIcon(actual.getRutaImagen());
+				g2.drawImage(icon.getImage(), actual.getPosX(), actual.getPosY(), null);
+			}
+			
 			actual = actual.getSiguiente();
 		}
 		NaveUsuario nave = principal.getPartida().getNave();
